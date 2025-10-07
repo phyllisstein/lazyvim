@@ -1,12 +1,10 @@
-if true then return {} end
-
 return {
   {
     "folke/which-key.nvim",
     opts = function(_, opts)
       opts.spec = opts.spec or {}
       -- Set your preferred icon (Nerd Font/emoji) for the AI group
-      table.insert(opts.spec, { "<leader>a", group = "+ai", icon = "" })
+      table.insert(opts.spec, { "<leader>a", group = "ai", icon = "" })
       -- Examples: "󰚩", "", "ﮧ", "", "🤖"
 
       -- Items under +ai with their own icons

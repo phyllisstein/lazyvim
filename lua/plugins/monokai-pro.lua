@@ -1,21 +1,16 @@
 return {
   {
-    "nvim-tree/nvim-web-devicons",
-    opts = {},
-  },
-  {
     "loctvl842/monokai-pro.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
     lazy = false,
     priority = 1000,
     opts = {
-      devicons = true,
-      -- terminal_colors = false,
+      terminal_colors = false,
+      devicons = false, -- highlight the icons of `nvim-web-devicons`
+      transparent_background = true,
+      filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
       inc_search = "underline", -- underline | background
       background_clear = {
-        -- "float_win",
+        "float_win",
         "toggleterm",
         "telescope",
         "which-key",
@@ -31,10 +26,34 @@ return {
           underline_visible = false,
         },
         indent_blankline = {
-          context_highlight = "default", -- default | pro
+          context_highlight = "pro", -- default | pro | octagon
           context_start_underline = true,
         },
-        treesitter = {},
+        native_lsp = {
+          virtual_text = {
+            errors = { "italic" },
+            hints = { "italic" },
+            warnings = { "italic" },
+            information = { "italic" },
+          },
+          underlines = {
+            errors = { "underline" },
+            hints = { "underline" },
+            warnings = { "underline" },
+            information = { "underline" },
+          },
+        },
+        lsp_semantic_tokens = true,
+        telescope = true,
+        treesitter = true,
+        cmp = true,
+        notify = true,
+        mini = true,
+        dashboard = true,
+        harpoon = true,
+        leap = true,
+        lightspeed = true,
+        mason = true,
       },
     },
     init = function ()

@@ -24,6 +24,20 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.b.textwidth = 80
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "latex" },
+  callback = function()
+    vim.b.textwidth = 80
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
   pattern = { "*" },
   callback = function()
     if vim.bo.filetype ~= "markdown" then

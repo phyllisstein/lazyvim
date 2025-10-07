@@ -24,10 +24,12 @@ return {
             client.server_capabilities.documentFormattingProvider = true
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = bufnr,
-              command = "EslintFixAll",
+              command = "LspEslintFixAll",
             })
           elseif client.name == "tsserver" or client.name == "vtsls" or client.name == "ts_ls" then
             client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+            client.server_capabilities.documentOnTypeFormattingProvider = false
           end
         end,
       })
