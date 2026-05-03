@@ -8,3 +8,5 @@ vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
 vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
 vim.o.fixendofline = true
 vim.o.fixeol = true
+
+vim.g.lazyvim_eslint_auto_format = true
