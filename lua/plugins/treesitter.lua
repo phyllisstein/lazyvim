@@ -1,5 +1,3 @@
-if true then return {} end
-
 return {
   {
     "PaterJason/nvim-treesitter-sexp",
@@ -17,7 +15,6 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false,
     opts = {
       -- LazyVim config for treesitter
       indent = { enable = true },
@@ -49,6 +46,9 @@ return {
         "vimdoc",
         "xml",
         "yaml",
+      },
+      exclude = {
+        "latex",
       },
     },
   }

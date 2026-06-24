@@ -9,18 +9,19 @@ return {
             local Rule = require("nvim-autopairs.rule")
             local cond = require("nvim-autopairs.conds")
 
-            local brackets = { { "(", ")" }, { "[", "]" }, { "{", "}" } }
+            local brackets = { { "(", ")" }, { "[", "]" }, { "{", "}" }, { "<", ">" } }
             npairs.add_rules({
                 -- Rule for a pair with left-side ' ' and right side ' '
                 Rule(" ", " ")
                 -- Pair will only occur if the conditional function returns true
                     :with_pair(function(opts)
-                        -- We are checking if we are inserting a space in (), [], or {}
+                        -- We are checking if we are inserting a space in (), [], {}, or <>
                         local pair = opts.line:sub(opts.col - 1, opts.col)
                         return vim.tbl_contains({
                             brackets[1][1] .. brackets[1][2],
                             brackets[2][1] .. brackets[2][2],
                             brackets[3][1] .. brackets[3][2],
+                            brackets[4][1] .. brackets[4][2],
                         }, pair)
                     end)
                     :with_move(cond.none())
@@ -34,6 +35,7 @@ return {
                                 brackets[1][1] .. "  " .. brackets[1][2],
                                 brackets[2][1] .. "  " .. brackets[2][2],
                                 brackets[3][1] .. "  " .. brackets[3][2],
+                                brackets[4][1] .. "  " .. brackets[4][2],
                             }, context)
                         end
                     ),

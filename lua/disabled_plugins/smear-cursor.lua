@@ -1,3 +1,5 @@
+if true then return {} end --- IGNORE ---
+
 return {
     {
         "nvim-mini/mini.animate",
