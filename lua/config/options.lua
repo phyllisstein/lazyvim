@@ -10,3 +10,5 @@ vim.o.fixendofline = true
 vim.o.fixeol = true
 
 vim.g.lazyvim_eslint_auto_format = true
+vim.g.lazyvim_rust_diagnostics = "bacon"
+vim.g.lazyvim_ts_lsp = "tsgo"
