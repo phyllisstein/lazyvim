@@ -1,20 +1,18 @@
 return {
-  {
-    "PaterJason/nvim-treesitter-sexp",
-    opts = {},
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    event = "LazyFile",
-    opts = {},
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "windwp/nvim-ts-autotag",
+  --   event = "LazyFile",
+  --   opts = {},
+  -- },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
     opts = {
       -- LazyVim config for treesitter
       indent = { enable = true },
@@ -24,7 +22,9 @@ return {
         "bash",
         "c",
         "clojure",
+        "cypher",
         "diff",
+        "graphql",
         "html",
         "javascript",
         "jsdoc",
@@ -39,6 +39,7 @@ return {
         "python",
         "query",
         "regex",
+        "styled",
         "toml",
         "tsx",
         "typescript",
@@ -50,6 +51,7 @@ return {
       exclude = {
         "latex",
       },
+
     },
   }
 }

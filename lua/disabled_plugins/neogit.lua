@@ -1,3 +1,5 @@
+if true then return {} end
+
 return {
   "NeogitOrg/neogit",
   lazy = true,
@@ -9,10 +11,10 @@ return {
     -- "nvim-telescope/telescope.nvim", -- optional
     -- "ibhagwan/fzf-lua",              -- optional
     -- "nvim-mini/mini.pick",           -- optional
-    -- "folke/snacks.nvim",             -- optional
+    "folke/snacks.nvim",             -- optional
   },
   cmd = "Neogit",
   keys = {
-    { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
+    { "<leader>gN", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
   }
 }

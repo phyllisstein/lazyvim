@@ -1,5 +1,3 @@
-if true then return {} end --- IGNORE ---
-
 return {
   "saghen/blink.cmp",
   opts = {

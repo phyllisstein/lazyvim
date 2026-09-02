@@ -1,19 +1,34 @@
-if true then return {} end
-
 return {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     build = ":Copilot auth",
-    opts = {
-      filetypes = {
-        markdown = false,
-        latex = false,
-        tex = false,
-      },
+    requires = {
+      "copilotlsp-nvim/copilot-lsp",
     },
-    init = function()
-      vim.g.copilot_filetypes = { markdown = false, latex = false, tex = false }
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<C-]>",
+            prev = "<C-[>",
+            dismiss = "<C-\\>",
+          },
+        },
+        panel = { enabled = false },
+        filetypes = {
+          markdown = false,
+          latex = false,
+          tex = false,
+        },
+      })
     end,
   },
   {
