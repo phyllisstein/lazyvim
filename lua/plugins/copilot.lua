@@ -6,23 +6,22 @@ return {
     requires = {
       "copilotlsp-nvim/copilot-lsp",
     },
-    event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = "<C-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<C-]>",
-            prev = "<C-[>",
-            dismiss = "<C-\\>",
-          },
-        },
-        panel = { enabled = false },
+        -- suggestion = {
+        --   enabled = true,
+        --   auto_trigger = true,
+        --   debounce = 75,
+        --   keymap = {
+        --     accept = "<C-l>",
+        --     accept_word = false,
+        --     accept_line = false,
+        --     next = "<C-]>",
+        --     prev = "<C-[>",
+        --     dismiss = "<C-\\>",
+        --   },
+        -- },
+        -- panel = { enabled = false },
         filetypes = {
           markdown = false,
           latex = false,
@@ -72,7 +71,7 @@ return {
               end
             end,
           })
-          :map("<leader>at")
+          :map("<leader>aP")
       end
     end,
   }

@@ -1,7 +1,26 @@
+vim.keymap.set("n", "<leader>uv", function()
+  local current = vim.diagnostic.config().virtual_text
+  vim.diagnostic.config({ virtual_text = not current })
+end, { desc = "Toggle diagnostic virtual text" })
+
 return {
     "neovim/nvim-lspconfig",
+    keys = {
+        {
+            "<leader>uv",
+            function()
+                local current = vim.diagnostic.config().virtual_text
+                vim.diagnostic.config({ virtual_text = not current })
+            end,
+            desc = "Toggle diagnostic virtual text",
+            icon = "",
+        },
+    },
     opts = {
         servers = {
+            marksman = {
+                enable = false,
+            },
             eslint = {
                 enable = false,
                 settings = {
@@ -23,11 +42,9 @@ return {
                     },
                 },
             },
-            rust_analyzer = {
-                enable = true,
+            ["rust-analyzer"] = {
                 settings = {
                     ["rust-analyzer"] = {
-                        numThreads = 1,
                         diagnostics = {
                             enable = true,
                             disabled = {
@@ -35,6 +52,20 @@ return {
                                 "unused-imports",
                                 "unused-variables",
                                 "dead-code",
+                            },
+                        },
+                        cargo = {
+                            allFeatures = false,
+                            allTargets = false,
+                            target = "aarch64-apple-darwin",
+                        },
+                        check = {
+                            command = "check",
+                            targets = { "aarch64-apple-darwin" },
+                        },
+                        hover = {
+                            actions = {
+                                enable = true,
                             },
                         },
                     },

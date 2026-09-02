@@ -1,14 +1,14 @@
 return {
-  -- {
-  --   "windwp/nvim-ts-autotag",
-  --   event = "LazyFile",
-  --   opts = {},
-  -- },
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "LazyFile",
+    opts = {},
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
+    opts = {},
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,

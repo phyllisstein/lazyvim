@@ -1,3 +1,5 @@
+if true then return {} end
+
 return {
   "saghen/blink.cmp",
   opts = {
@@ -34,8 +36,4 @@ return {
       }
     }
   },
-  {
-    "rafamadriz/friendly-snippets",
-    enabled = false
-  }
 }
