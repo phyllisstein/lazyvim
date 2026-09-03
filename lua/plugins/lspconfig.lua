@@ -13,40 +13,40 @@ return {
                 vim.diagnostic.config({ virtual_text = not current })
             end,
             desc = "Toggle diagnostic virtual text",
-            icon = "",
         },
     },
     opts = {
         servers = {
             marksman = {
-                enable = false,
+                enabled = false,
             },
             eslint = {
-                enable = false,
+                enabled = false,
                 settings = {
                     validate = "on",
                     packageManager = "yarn",
-                    format = { enable = false },
+                    format = { enabled = false },
                     workingDirectory = { mode = "auto" },
                     quiet = true,
                     problems = { shortenToSingleLine = true },
                 },
             },
             oxlint = {
-                enable = true,
+                enabled = true,
                 settings = {
                     oxlint = {
-                        enable = true,
+                        enabled = true,
                         lintOnInsert = true,
                         lintOnInsertDebounceMillis = 500,
                     },
                 },
             },
             ["rust-analyzer"] = {
+                enabled = false,
                 settings = {
                     ["rust-analyzer"] = {
                         diagnostics = {
-                            enable = true,
+                            enabled = true,
                             disabled = {
                                 "unresolved-proc-macro",
                                 "unused-imports",
@@ -65,7 +65,7 @@ return {
                         },
                         hover = {
                             actions = {
-                                enable = true,
+                                enabled = true,
                             },
                         },
                     },

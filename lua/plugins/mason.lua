@@ -7,7 +7,6 @@ return {
     },
     opts = {
         ensure_installed = {
-            "rust_analyzer",
             "oxlint",
         },
         automatic_enable = {
@@ -17,7 +16,6 @@ return {
                 "oxfmt",
                 "marksman",
                 "markdownlint-cli2",
-                "tsgo",
             }
         }
     },
