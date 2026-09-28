@@ -7,23 +7,22 @@ return {
             "MunifTanjim/nui.nvim",
             "nvim-tree/nvim-web-devicons"
         },
+        enabled = false,
         lazy = false, -- neo-tree will lazily load itself
         opts = {
-            close_if_last_window = true,
+            close_if_last_window = false,
+            enable_diagnostics = false,
             filesystem = {
                 follow_current_file = {
                     enabled = true,
                 },
                 filtered_items = {
-                    hide_dotfiles = true,
+                    hide_dotfiles = false,
                     hide_gitignored = true,
                 },
             },
             sources = {
                 "filesystem",
-                -- "buffers",
-                "git_status",
-                "document_symbols",
             },
             git_status_scope_to_path = true,
             sort_case_insensitive = true,
@@ -56,15 +55,5 @@ return {
                 },
             },
         },
-    },
-    {
-        "antosha417/nvim-lsp-file-operations",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
-        },
-        config = function()
-            require("lsp-file-operations").setup()
-        end,
     },
 }

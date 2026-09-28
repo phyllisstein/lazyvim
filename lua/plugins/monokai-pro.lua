@@ -6,8 +6,8 @@ return {
         priority = 1000,
         config = function()
             require("monokai-pro").setup({
-                transparent_background = false,
-                terminal_colors = true,
+                -- transparent_background = false,
+                -- terminal_colors = false,
                 devicons = true,
                 styles = {
                     comment = { italic = true },
@@ -25,20 +25,21 @@ return {
                     day_filter = "pro",
                     night_filter = "spectrum",
                 },
-                inc_search = "background", -- underline | background
+                inc_search = "underline", -- underline | background
                 background_clear = {
-                    "toggleterm",
-                    "telescope",
-                    "renamer",
+                    "bufferline",
+                    "neo-tree",
                     "notify",
+                    "nvim-tree",
+                    "renamer",
+                    "telescope",
+                    "toggleterm",
+                    "which-key",
                 },
-                plugins = {
-                    { name = "neo-tree", lazy = { module = "neo-tree", event = "FileType neo-tree" } },
-                },
+                disabled_plugins = {},
             })
+
             vim.cmd.colorscheme("monokai-pro")
-        end,
-        init = function()
         end,
     },
 }

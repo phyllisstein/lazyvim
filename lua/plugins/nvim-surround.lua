@@ -8,6 +8,40 @@ return {
                 no_mappings = true,
             })
 
+            vim.keymap.set("i", "<C-w>s", "<Plug>(nvim-surround-insert)", {
+                desc = "Add a surrounding pair around the cursor (insert mode)",
+            })
+            vim.keymap.set("i", "<C-w>S", "<Plug>(nvim-surround-insert-line)", {
+                desc = "Add a surrounding pair around the cursor, on new lines (insert mode)",
+            })
+            vim.keymap.set("n", "ws", "<Plug>(nvim-surround-normal)", {
+                desc = "Add a surrounding pair around a motion (normal mode)",
+            })
+            vim.keymap.set("n", "wss", "<Plug>(nvim-surround-normal-cur)", {
+                desc = "Add a surrounding pair around the current line (normal mode)",
+            })
+            vim.keymap.set("n", "wS", "<Plug>(nvim-surround-normal-line)", {
+                desc = "Add a surrounding pair around a motion, on new lines (normal mode)",
+            })
+            vim.keymap.set("n", "wSS", "<Plug>(nvim-surround-normal-cur-line)", {
+                desc = "Add a surrounding pair around the current line, on new lines (normal mode)",
+            })
+            vim.keymap.set("x", "W", "<Plug>(nvim-surround-visual)", {
+                desc = "Add a surrounding pair around a visual selection",
+            })
+            vim.keymap.set("x", "wS", "<Plug>(nvim-surround-visual-line)", {
+                desc = "Add a surrounding pair around a visual selection, on new lines",
+            })
+            vim.keymap.set("n", "wds", "<Plug>(nvim-surround-delete)", {
+                desc = "Delete a surrounding pair",
+            })
+            vim.keymap.set("n", "wcs", "<Plug>(nvim-surround-change)", {
+                desc = "Change a surrounding pair",
+            })
+            vim.keymap.set("n", "wcS", "<Plug>(nvim-surround-change-line)", {
+                desc = "Change a surrounding pair, putting replacements on new lines",
+            })
+
             -- vim.keymap.set("i", "<C-g>s", "<Plug>(nvim-surround-insert)", {
             --     desc = "Add a surrounding pair around the cursor (insert mode)",
             -- })

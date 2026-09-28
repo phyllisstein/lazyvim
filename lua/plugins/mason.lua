@@ -1,22 +1,10 @@
-
 return {
-    "mason-org/mason-lspconfig.nvim",
-    dependencies = {
-        { "mason-org/mason.nvim", opts = {} },
-        "neovim/nvim-lspconfig",
-    },
+    "mason-org/mason.nvim",
     opts = {
         ensure_installed = {
-            "oxlint",
+            "codelldb",
+            "clangd",
+            "fsautocomplete",
         },
-        automatic_enable = {
-            exclude = {
-                "bacon_ls",
-                "latex",
-                "oxfmt",
-                "marksman",
-                "markdownlint-cli2",
-            }
-        }
     },
 }
