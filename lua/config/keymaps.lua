@@ -59,3 +59,4 @@ vim.api.nvim_create_user_command("InspectLine", function()
   end
   vim.api.nvim_echo(out, true, {})
 end, { desc = "List every extmark (virtual text, signs, highlights) on the cursor line" })
+vim.keymap.set("n", "<leader>uX", "<cmd>InspectLine<cr>", { desc = "Inspect Line (extmarks)" })
