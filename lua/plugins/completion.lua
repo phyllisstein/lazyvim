@@ -3,11 +3,25 @@
 -- and no buffer-word suggestions. Ghost-text styling lives in lua/plugins/ui/ghost-text.lua.
 
 local inline = vim.lsp.inline_completion
+local inline_ns = vim.api.nvim_create_namespace("nvim.lsp.inline_completion")
+
+-- Hide the ghost text and ignore it until the buffer next changes.
+local function dismiss_ghost()
+  vim.api.nvim_buf_clear_namespace(0, inline_ns, 0, -1)
+  vim.b.ghost_dismissed_at = vim.b.changedtick
+end
+
+local function ghost_dismissed()
+  return vim.b.ghost_dismissed_at == vim.b.changedtick
+end
 
 -- Accept the next word or line of the ghost text, leaving the rest suggested.
 -- Copilot re-requests on the cursor move and normally offers the remainder again.
 ---@param unit "word"|"line"
 local function accept_partial(unit)
+  if ghost_dismissed() then
+    return false
+  end
   return inline.get({
     on_accept = function(item)
       if type(item.insert_text) ~= "string" then
@@ -81,18 +95,33 @@ return {
       })
       opts.keymap["<CR>"] = { "fallback" }
 
+      -- Moving through the menu dismisses the ghost text, so what's on screen is what <Tab> takes.
+      -- Neovim has no public dismiss, so the ghost is cleared and ignored until the next edit
+      -- (Copilot re-suggests as you type).
+      for key, select in pairs({ ["<Down>"] = "select_next", ["<C-n>"] = "select_next", ["<Up>"] = "select_prev", ["<C-p>"] = "select_prev" }) do
+        opts.keymap[key] = {
+          function(cmp)
+            if cmp.is_menu_visible() then
+              dismiss_ghost()
+              return cmp[select]()
+            end
+          end,
+          key:match("^<C%-") and "fallback_to_mappings" or "fallback",
+        }
+      end
+
       -- <Tab>, in order:
-      --   1. Copilot's ghost text, whole
-      --   2. the menu item you selected (<C-n>/<Down>)
+      --   1. the menu item you selected (<C-n>/<Down>)
+      --   2. Copilot's ghost text, whole
       --   3. a next-edit suggestion (sidekick), then the next snippet placeholder
       --   4. a literal tab
       opts.keymap["<Tab>"] = {
         function(cmp)
-          if inline.get() then
-            return true
-          end
           if cmp.is_menu_visible() and cmp.get_selected_item() then
             return cmp.accept()
+          end
+          if not ghost_dismissed() and inline.get() then
+            return true
           end
           if LazyVim.cmp.map({ "ai_nes", "snippet_forward" })() then
             return true
