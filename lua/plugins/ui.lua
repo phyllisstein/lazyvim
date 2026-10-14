@@ -33,38 +33,20 @@ local DIAGNOSTIC_ICONS = { error = "", warn = "", info = "", hint = "�
 
 -- Inlay hints ------------------------------------------------------------------------------
 
--- Neovim has no settings for how inlay hints are drawn, so the public handler is wrapped to
--- rewrite labels first: drop the colons (": Type" -> "Type", "name:" -> "name"), then pad each
--- side with INLAY_HINT_PADDING spaces, replacing the single optional space servers ask for.
+-- Spaces on each side of every inlay hint, replacing the single optional space servers ask for.
+-- They're part of the label, so the hint's background covers them and each hint reads as a pill.
+-- Neovim has no setting for this, so the public handler is wrapped to pad labels before drawing.
 local INLAY_HINT_PADDING = 1
-
--- Anchored on the separator's space so Rust paths ("::std", "Foo::") are left alone.
-local function strip_colons(text, first, last)
-  if (first or last) and text:match("^:%s*$") then
-    return "" -- a separator sent as its own label part
-  end
-  if first then
-    text = text:gsub("^:%s+", "")
-  end
-  if last then
-    text = text:gsub("([^:]):%s*$", "%1")
-  end
-  return text
-end
 
 vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx)
   local pad = (" "):rep(INLAY_HINT_PADDING)
   for _, hint in ipairs(result or {}) do
     hint.paddingLeft, hint.paddingRight = false, false
     if type(hint.label) == "string" then
-      hint.label = pad .. strip_colons(hint.label, true, true) .. pad
+      hint.label = pad .. hint.label .. pad
     else
-      local parts = hint.label
-      for i, part in ipairs(parts) do
-        part.value = strip_colons(part.value, i == 1, i == #parts)
-      end
-      table.insert(parts, 1, { value = pad })
-      table.insert(parts, { value = pad })
+      table.insert(hint.label, 1, { value = pad })
+      table.insert(hint.label, { value = pad })
     end
   end
   return vim.lsp.inlay_hint.on_inlayhint(err, result, ctx)
