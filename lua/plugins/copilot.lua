@@ -1,35 +1,19 @@
+-- Copilot runs through the native LSP client (the ai.copilot-native extra, which sidekick's next-edit
+-- suggestions also use). zbirenbaum/copilot.lua used to run here too, as a second Copilot server
+-- feeding the same ghost text. Sign in with :LspCopilotSignIn.
+
+-- No suggestions in prose.
+local OFF_FILETYPES = { "markdown", "latex", "tex" }
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_copilot_filetypes", { clear = true }),
+  pattern = OFF_FILETYPES,
+  callback = function(args)
+    vim.lsp.inline_completion.enable(false, { bufnr = args.buf })
+  end,
+})
+
 return {
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    requires = {
-      "copilotlsp-nvim/copilot-lsp",
-    },
-    config = function()
-      require("copilot").setup({
-        -- suggestion = {
-        --   enabled = true,
-        --   auto_trigger = true,
-        --   debounce = 75,
-        --   keymap = {
-        --     accept = "<C-l>",
-        --     accept_word = false,
-        --     accept_line = false,
-        --     next = "<C-]>",
-        --     prev = "<C-[>",
-        --     dismiss = "<C-\\>",
-        --   },
-        -- },
-        -- panel = { enabled = false },
-        filetypes = {
-          markdown = false,
-          latex = false,
-          tex = false,
-        },
-      })
-    end,
-  },
   {
     "folke/which-key.nvim",
     opts = function(_, opts)
@@ -41,38 +25,17 @@ return {
   },
   {
     "folke/snacks.nvim",
-    --- Updated this section to align with approach taken in other LazyVim snacks configs
-    ---@diagnostic disable-next-line: unused-local
-    opts = function(_, opts)
-      -- Credit for this section goes to exsesx
-      -- https://github.com/LazyVim/LazyVim/discussions/4232#discussioncomment-11191278
-      local snacks = require("snacks")
-      -- Check whether Copilot is installed
-      if pcall(require, "copilot") then
-        --- Workaround to keep track of state
-        vim.g.snacks_copilot_enabled = true
-        snacks
-          .toggle({
-            name = "Copilot Completion",
-            color = {
-              enabled = "azure",
-              disabled = "orange",
-            },
-            get = function()
-              return vim.g.snacks_copilot_enabled
-            end,
-            set = function(state)
-              if state then
-                vim.g.snacks_copilot_enabled = true
-                require("copilot.command").enable()
-              else
-                vim.g.snacks_copilot_enabled = false
-                require("copilot.command").disable()
-              end
-            end,
-          })
-          :map("<leader>aP")
-      end
+    opts = function()
+      Snacks.toggle({
+        name = "Copilot Completion",
+        color = { enabled = "azure", disabled = "orange" },
+        get = function()
+          return vim.lsp.inline_completion.is_enabled()
+        end,
+        set = function(state)
+          vim.lsp.inline_completion.enable(state)
+        end,
+      }):map("<leader>aP")
     end,
-  }
+  },
 }
