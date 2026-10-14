@@ -2,9 +2,10 @@
 -- Upstream spreads this across plugins/ui.lua, features/heirline/*, config/icons.lua,
 -- config/logos.lua and util/{ui,theme,plugin}.lua; everything it needs is inlined here.
 
--- Set to true for "pill" statusline sections (upstream enables this when monokai-pro's
--- `background_clear` contains "neo-tree"). It also draws a separator on the bufferline offset.
-local FLOAT = false
+-- "Pill" statusline sections on a Pmenu-colored background, as in the monokai-pro README
+-- screenshot. Upstream ties this to neo-tree being in monokai-pro's `background_clear`; here
+-- it's just a switch. Also draws a separator on the bufferline's explorer offset.
+local FLOAT = true
 
 local SEP = {
   fill = { left = "", right = "" },
@@ -312,6 +313,43 @@ local DRAGONS = {
 return {
   -- heirline replaces LazyVim's lualine
   { "nvim-lualine/lualine.nvim", enabled = false },
+  -- mini.hipatterns (below) covers TODO/FIXME/HACK/NOTE highlighting
+  { "folke/todo-comments.nvim", enabled = false },
+
+  -- Gutter: line number, then signs, then fold markers (fillchars in config/options.lua)
+  {
+    "luukvbaal/statuscol.nvim",
+    event = "VimEnter",
+    config = function()
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = false,
+        ft_ignore = { "neo-tree", "snacks_dashboard" },
+        segments = {
+          { text = { builtin.lnumfunc, " " }, condition = { true, builtin.not_empty }, click = "v:lua.ScLa" },
+          { text = { "%s" }, click = "v:lua.ScSa" },
+          { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
+        },
+      })
+    end,
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      diagnostics = {
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = DIAGNOSTIC_ICONS.error,
+            [vim.diagnostic.severity.WARN] = DIAGNOSTIC_ICONS.warn,
+            [vim.diagnostic.severity.HINT] = DIAGNOSTIC_ICONS.hint,
+            [vim.diagnostic.severity.INFO] = DIAGNOSTIC_ICONS.info,
+          },
+        },
+        float = { style = "minimal", source = true, header = "", prefix = "" },
+      },
+    },
+  },
 
   {
     "rebelot/heirline.nvim",
@@ -368,7 +406,8 @@ return {
     opts = {
       options = {
         buffer_close_icon = "󰅖",
-        separator_style = { "", "" },
+        separator_style = "slant",
+        always_show_bufferline = true,
         indicator = { style = "underline" },
         diagnostics_indicator = function(count)
           return count > 9 and "9+" or tostring(count)

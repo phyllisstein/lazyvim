@@ -8,3 +8,23 @@ vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
 vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
 vim.o.fixendofline = true
 vim.o.fixeol = true
+
+-- UI, from loctvl842/nvim
+vim.o.relativenumber = false
+vim.o.numberwidth = 4
+vim.o.foldcolumn = "1"
+vim.o.cmdheight = 0
+vim.o.pumblend = 0
+vim.o.scrolloff = 4
+vim.o.sidescrolloff = 0
+vim.o.title = true
+vim.o.titlestring = "%<%F%=%l/%L - nvim"
+vim.opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+}
+vim.opt.listchars = { tab = "  ", trail = "-", nbsp = "+" }
