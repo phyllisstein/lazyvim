@@ -53,9 +53,14 @@ return {
                         ["@punctuation.bracket"] = { link = "@punctuation.delimiter" }, -- link brackets to delimiters (dimmed2)
                         -- ["@punctuation.bracket.cpp"] = { link = "@punctuation.delimiter.cpp" }, -- languages that get specific delimieter highlighting would need to be handled separately
 
-                        -- LSP inlay hints: dimmer, italic, no background. bg must be "NONE" explicitly,
+                        -- LSP inlay hints: a muted accent, so they read as neither code nor comments
+                        -- (comments are dimmed3 italic). Swap the accent or the strength (0-1) to taste;
+                        -- c.base.dimmed4 is the plain-gray alternative. bg must be "NONE" explicitly,
                         -- since overrides are merged into the theme's { fg = dimmed2, bg = dimmed5 }.
-                        LspInlayHint = { fg = c.base.dimmed3, bg = "NONE", italic = true },
+                        LspInlayHint = {
+                            fg = require("monokai-pro.colors").blend(c.base.magenta, 0.4, c.editor.background),
+                            bg = "NONE",
+                        },
 
 
                         DashboardRecent = { fg = c.base.magenta },
