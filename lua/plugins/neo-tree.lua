@@ -143,7 +143,7 @@ return {
                     align = "right",
                 },
                 diagnostics = {
-                    symbols = { error = "", warn = "", hint = "", info = "" },
+                    symbols = require("config.ui").diagnostic_icons,
                 },
             },
         },
