@@ -59,4 +59,10 @@ vim.api.nvim_create_user_command("InspectLine", function()
   end
   vim.api.nvim_echo(out, true, {})
 end, { desc = "List every extmark (virtual text, signs, highlights) on the cursor line" })
-vim.keymap.set("n", "<leader>uX", "<cmd>InspectLine<cr>", { desc = "Inspect Line (extmarks)" })
+-- Replaces LazyVim's relative-number toggle, which config/autocmds.lua makes redundant.
+vim.keymap.set("n", "<leader>uL", "<cmd>InspectLine<cr>", { desc = "Inspect Line (extmarks)" })
+-- Snacks registered its own which-key label for the toggle; replace that too.
+local ok, wk = pcall(require, "which-key")
+if ok then
+  wk.add({ { "<leader>uL", desc = "Inspect Line (extmarks)", icon = { icon = "󰙅 ", color = "cyan" } } })
+end
