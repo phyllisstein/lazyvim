@@ -33,8 +33,46 @@ return {
                     "notify",
                 },
                 plugins = {
-                    { name = "neo-tree", lazy = { module = "neo-tree", event = "FileType neo-tree" } },
+                    bufferline = {
+                        underline_selected = true,
+                        underline_visible = false,
+                        underline_fill = true,
+                        bold = false,
+                    },
+                    indent_blankline = {
+                        context_highlight = "pro", -- default | pro
+                        context_start_underline = true,
+                    },
                 },
+                -- Groups used by lua/plugins/ui.lua. monokai-pro caches highlights and only notices
+                -- *whether* an override exists, so after editing this run
+                -- :lua require("monokai-pro.theme").clear_cache()
+                override = function(c)
+                    return {
+                        DashboardRecent = { fg = c.base.magenta },
+                        DashboardProject = { fg = c.base.blue },
+                        DashboardConfiguration = { fg = c.base.white },
+                        DashboardSession = { fg = c.base.green },
+                        DashboardLazy = { fg = c.base.cyan },
+                        DashboardServer = { fg = c.base.yellow },
+                        DashboardQuit = { fg = c.base.red },
+                        NeoTreeStatusLine = { link = "StatusLine" },
+                        MiniHipatternsFixme = { fg = c.base.black, bg = c.base.red, bold = true },
+                        MiniHipatternsTodo = { fg = c.base.black, bg = c.base.blue, bold = true },
+                        MiniHipatternsHack = { fg = c.base.black, bg = c.base.yellow, bold = true },
+                        MiniHipatternsNote = { fg = c.base.black, bg = c.base.green, bold = true },
+                        MiniHipatternsWip = { fg = c.base.black, bg = c.base.cyan, bold = true },
+                        -- indent-blankline's scope colors; monokai-pro only defines these once
+                        -- rainbow-delimiters.nvim loads, and ibl errors on missing groups.
+                        RainbowDelimiterRed = { fg = c.base.red },
+                        RainbowDelimiterYellow = { fg = c.base.yellow },
+                        RainbowDelimiterBlue = { fg = c.base.cyan },
+                        RainbowDelimiterOrange = { fg = c.base.blue },
+                        RainbowDelimiterGreen = { fg = c.base.green },
+                        RainbowDelimiterViolet = { fg = c.base.magenta },
+                        RainbowDelimiterCyan = { fg = c.base.cyan },
+                    }
+                end,
             })
             vim.cmd.colorscheme("monokai-pro")
         end,
