@@ -53,6 +53,10 @@ return {
                         ["@punctuation.bracket"] = { link = "@punctuation.delimiter" }, -- link brackets to delimiters (dimmed2)
                         -- ["@punctuation.bracket.cpp"] = { link = "@punctuation.delimiter.cpp" }, -- languages that get specific delimieter highlighting would need to be handled separately
 
+                        -- LSP inlay hints: dimmer, italic, no background. bg must be "NONE" explicitly,
+                        -- since overrides are merged into the theme's { fg = dimmed2, bg = dimmed5 }.
+                        LspInlayHint = { fg = c.base.dimmed3, bg = "NONE", italic = true },
+
 
                         DashboardRecent = { fg = c.base.magenta },
                         DashboardProject = { fg = c.base.blue },
