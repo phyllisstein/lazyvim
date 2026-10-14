@@ -10,7 +10,7 @@ vim.o.fixendofline = true
 vim.o.fixeol = true
 
 -- UI, from loctvl842/nvim
-vim.o.relativenumber = false
+vim.o.relativenumber = true -- absolute while in INSERT; see config/autocmds.lua
 vim.o.numberwidth = 4
 vim.o.foldcolumn = "1"
 vim.o.cmdheight = 0

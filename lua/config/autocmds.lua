@@ -45,3 +45,23 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+-- Relative line numbers in NORMAL, absolute in INSERT (like VSCodeVim's `vim.smartRelativeLine`).
+-- Only touches windows that show numbers at all, so neo-tree, terminals, etc. stay as they are.
+local number_toggle = vim.api.nvim_create_augroup("user_number_toggle", { clear = true })
+vim.api.nvim_create_autocmd("InsertEnter", {
+  group = number_toggle,
+  callback = function()
+    if vim.wo.number then
+      vim.wo.relativenumber = false
+    end
+  end,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  group = number_toggle,
+  callback = function()
+    if vim.wo.number then
+      vim.wo.relativenumber = true
+    end
+  end,
+})
