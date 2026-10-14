@@ -49,6 +49,11 @@ return {
                 -- :lua require("monokai-pro.theme").clear_cache()
                 override = function(c)
                     return {
+                        -- TreeSitter overrides
+                        ["@punctuation.bracket"] = { link = "@punctuation.delimiter" }, -- link brackets to delimiters (dimmed2)
+                        -- ["@punctuation.bracket.cpp"] = { link = "@punctuation.delimiter.cpp" }, -- languages that get specific delimieter highlighting would need to be handled separately
+
+
                         DashboardRecent = { fg = c.base.magenta },
                         DashboardProject = { fg = c.base.blue },
                         DashboardConfiguration = { fg = c.base.white },
