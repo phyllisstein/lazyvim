@@ -1,4 +1,5 @@
--- Completion: one Tab for both blink's menu and Copilot's ghost text, partial ghost-text accept,
+-- Completion: nothing accepted by default (Enter is always Enter), one Tab for Copilot ghost text
+-- and menu selections, partial ghost-text accept,
 -- and no buffer-word suggestions. Ghost-text styling lives in lua/plugins/ui/ghost-text.lua.
 
 local inline = vim.lsp.inline_completion
@@ -71,26 +72,30 @@ return {
         return s ~= "buffer"
       end, opts.sources.default or {})
 
+      -- Nothing is ever accepted by default, so nothing ever needs a keystroke to ignore:
+      -- the menu starts with no item selected, moving through it doesn't insert anything, and
+      -- <CR> is always a newline. <C-y> still accepts explicitly (selecting the top item if none).
+      opts.completion = opts.completion or {}
+      opts.completion.list = vim.tbl_deep_extend("force", opts.completion.list or {}, {
+        selection = { preselect = false, auto_insert = false },
+      })
+      opts.keymap["<CR>"] = { "fallback" }
+
       -- <Tab>, in order:
-      --   1. the menu item you moved to (deliberately, with <C-n>/<Down>), if the menu is open
-      --   2. Copilot's ghost text, whole
+      --   1. Copilot's ghost text, whole
+      --   2. the menu item you selected (<C-n>/<Down>)
       --   3. a next-edit suggestion (sidekick), then the next snippet placeholder
-      --   4. the menu's top item, if the menu is open
-      --   5. a literal tab
-      -- <CR> still accepts the menu item, so with both showing: <Tab> ghost, <CR> menu.
+      --   4. a literal tab
       opts.keymap["<Tab>"] = {
         function(cmp)
-          if cmp.is_menu_visible() and (cmp.get_selected_item_idx() or 1) > 1 then
-            return cmp.accept()
-          end
           if inline.get() then
             return true
           end
+          if cmp.is_menu_visible() and cmp.get_selected_item() then
+            return cmp.accept()
+          end
           if LazyVim.cmp.map({ "ai_nes", "snippet_forward" })() then
             return true
-          end
-          if cmp.is_menu_visible() then
-            return cmp.select_and_accept()
           end
         end,
         "fallback",
