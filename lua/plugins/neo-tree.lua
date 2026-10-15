@@ -158,4 +158,25 @@ return {
             require("lsp-file-operations").setup()
         end,
     },
+    {
+        -- The edgy extra pins one sidebar pane per neo-tree source, which duplicates the source
+        -- selector's tabs. Keep a single pane that holds whichever source the selector shows.
+        "folke/edgy.nvim",
+        optional = true,
+        opts = function(_, opts)
+            local kept = false
+            opts.left = vim.tbl_filter(function(view)
+                if view.ft ~= "neo-tree" then
+                    return true
+                end
+                if kept then
+                    return false
+                end
+                kept = true
+                view.title = "Neo-Tree"
+                view.filter = nil -- any source, so switching tabs keeps the window in the sidebar
+                return true
+            end, opts.left or {})
+        end,
+    },
 }
