@@ -41,36 +41,7 @@ return {
                     },
                 },
             },
-            ["rust-analyzer"] = {
-                enabled = false,
-                settings = {
-                    ["rust-analyzer"] = {
-                        diagnostics = {
-                            enabled = true,
-                            disabled = {
-                                "unresolved-proc-macro",
-                                "unused-imports",
-                                "unused-variables",
-                                "dead-code",
-                            },
-                        },
-                        cargo = {
-                            allFeatures = false,
-                            allTargets = false,
-                            target = "aarch64-apple-darwin",
-                        },
-                        check = {
-                            command = "check",
-                            targets = { "aarch64-apple-darwin" },
-                        },
-                        hover = {
-                            actions = {
-                                enabled = true,
-                            },
-                        },
-                    },
-                },
-            },
+            -- rust-analyzer is configured in lua/plugins/rustaceanvim.lua (rustaceanvim runs it).
         },
     },
     init = function()
