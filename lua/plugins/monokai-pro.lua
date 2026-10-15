@@ -69,6 +69,11 @@ return {
                             bg = "NONE",
                         },
                         DiagnosticSignHint = { link = "DiagnosticVirtualTextHint" },
+                        DiagnosticVirtualTextInfo = {
+                            fg = require("monokai-pro.colors").blend(c.base.cyan, 0.4, c.editor.background),
+                            bg = "NONE",
+                        },
+                        DiagnosticSignInfo = { link = "DiagnosticVirtualTextInfo" },
                         DiagnosticVirtualTextError = {
                             fg = require("monokai-pro.colors").blend(c.base.red, 0.4, c.editor.background),
                             bg = "NONE",
