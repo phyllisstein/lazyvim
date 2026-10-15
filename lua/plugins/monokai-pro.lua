@@ -62,8 +62,10 @@ return {
                             fg = require("monokai-pro.colors").blend(c.base.magenta, 0.4, c.editor.background),
                             bg = require("monokai-pro.colors").blend(c.base.dark, 0.45, c.editor.background),
                         },
+                        -- monokai-pro's naming is off by one hue: c.base.blue is its orange (accent2);
+                        -- the blue is c.base.cyan (accent5).
                         DiagnosticVirtualTextHint = {
-                            fg = require("monokai-pro.colors").blend(c.base.blue, 0.4, c.editor.background),
+                            fg = require("monokai-pro.colors").blend(c.base.cyan, 0.4, c.editor.background),
                             bg = "NONE",
                         },
                         DiagnosticSignHint = { link = "DiagnosticVirtualTextHint" },
