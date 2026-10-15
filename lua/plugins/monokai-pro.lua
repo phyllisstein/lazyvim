@@ -25,7 +25,7 @@ return {
                     day_filter = "pro",
                     night_filter = "spectrum",
                 },
-                inc_search = "background", -- underline | background
+                inc_search = "underline", -- underline | background
                 background_clear = {
                     "toggleterm",
                     "telescope",
@@ -62,6 +62,21 @@ return {
                             fg = require("monokai-pro.colors").blend(c.base.magenta, 0.4, c.editor.background),
                             bg = require("monokai-pro.colors").blend(c.base.dark, 0.45, c.editor.background),
                         },
+                        DiagnosticVirtualTextHint = {
+                            fg = require("monokai-pro.colors").blend(c.base.blue, 0.4, c.editor.background),
+                            bg = "NONE",
+                        },
+                        DiagnosticSignHint = { link = "DiagnosticVirtualTextHint" },
+                        DiagnosticVirtualTextError = {
+                            fg = require("monokai-pro.colors").blend(c.base.red, 0.4, c.editor.background),
+                            bg = "NONE",
+                        },
+                        DiagnosticSignError = { link = "DiagnosticVirtualTextError" },
+                        DiagnosticVirtualTextWarn = {
+                            fg = require("monokai-pro.colors").blend(c.base.yellow, 0.4, c.editor.background),
+                            bg = "NONE",
+                        },
+                        DiagnosticSignWarn = { link = "DiagnosticVirtualTextWarn" },
 
 
                         DashboardRecent = { fg = c.base.magenta },
