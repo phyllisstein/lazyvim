@@ -20,7 +20,7 @@ return {
       options = {
         buffer_close_icon = "󰅖",
         separator_style = "slant",
-        always_show_bufferline = true,
+        always_show_bufferline = false,
         indicator = { style = "underline" },
         diagnostics_indicator = function(count)
           return count > 9 and "9+" or tostring(count)

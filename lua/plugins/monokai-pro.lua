@@ -31,6 +31,7 @@ return {
                     "telescope",
                     "renamer",
                     "notify",
+                    "which-key",
                 },
                 plugins = {
                     bufferline = {
