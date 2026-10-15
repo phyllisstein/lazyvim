@@ -1,8 +1,45 @@
 -- rust-analyzer runs through rustaceanvim, so its settings go here (merged into the LazyVim Rust
 -- extra's `default_settings`), not under nvim-lspconfig. Names and values follow rust-analyzer's
 -- configuration reference: https://rust-analyzer.github.io/book/configuration.html
+
+-- codelldb from PATH, skipping Mason's bin directory (Mason prepends it, and mason-nvim-dap
+-- installs its own codelldb via lua/plugins/dap.lua).
+local function system_codelldb()
+    local mason_bin = vim.fs.normalize(vim.fn.expand("$MASON/bin"))
+    for dir in vim.gsplit(vim.env.PATH or "", ":", { plain = true }) do
+        local path = vim.fs.joinpath(dir, "codelldb")
+        if vim.fs.normalize(dir) ~= mason_bin and vim.fn.executable(path) == 1 then
+            return path
+        end
+    end
+end
+
 return {
     "mrcjkb/rustaceanvim",
+    -- Replaces the LazyVim Rust extra's config, which (whenever Mason is installed) pairs whatever
+    -- `codelldb` is first on PATH with Mason's liblldb. Instead: run your PATH codelldb directly, as
+    -- rustaceanvim itself would (codelldb finds its own LLDB); with none, leave `dap` unset so
+    -- rustaceanvim's own detection applies.
+    config = function(_, opts)
+        local codelldb = system_codelldb()
+        if codelldb then
+            opts.dap = {
+                adapter = {
+                    type = "server",
+                    host = "127.0.0.1",
+                    port = "${port}",
+                    executable = { command = codelldb, args = { "--port", "${port}" } },
+                },
+            }
+        end
+        vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+        if vim.fn.executable("rust-analyzer") == 0 then
+            LazyVim.error(
+                "**rust-analyzer** not found in PATH, please install it.\nhttps://rust-analyzer.github.io/",
+                { title = "rustaceanvim" }
+            )
+        end
+    end,
     opts = {
         server = {
             default_settings = {
